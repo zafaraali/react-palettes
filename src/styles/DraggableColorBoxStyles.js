@@ -9,6 +9,8 @@ export default {
     position: 'relative',
     cursor: 'pointer',
     marginBottom: '-5px',
+    transition: 'filter 160ms ease',
+    '&:hover': { filter: 'brightness(1.06)' },
     '&:hover svg': {
       color: 'white',
       transform: 'scale(1.5)'
@@ -29,14 +31,15 @@ export default {
   boxContent: {
     position: 'absolute',
     width: '100%',
-    left: '-9px',
+    left: '0',
     bottom: '0px',
-    padding: '10px',
+    padding: '12px 16px',
     color: props =>
       chroma(props.color).luminance() <= 0.15 ? 'white' : 'rgba(0, 0, 0, 0.5)',
     letterSpacing: '1px',
     textTransform: 'uppercase',
     fontSize: '12px',
+    fontWeight: 700,
     display: 'flex',
     justifyContent: 'space-between'
   },

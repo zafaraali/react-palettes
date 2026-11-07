@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { withStyles } from '@material-ui/styles';
 import styles from '../styles/MiniPaletteStyles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 class MiniPalette extends PureComponent {
   deletePalette = e => {
     e.stopPropagation();
@@ -22,10 +23,9 @@ class MiniPalette extends PureComponent {
 
     return (
       <div className={classes.root} onClick={this.handleClick}>
-        <DeleteIcon
-          className={classes.deleteIcon}
-          onClick={this.deletePalette}
-        />
+        <IconButton className={classes.deleteIcon} onClick={this.deletePalette} aria-label={`Delete ${paletteName}`}>
+          <DeleteIcon />
+        </IconButton>
 
         <div className={classes.colors}>{miniColorBoxes} </div>
         <h5 className={classes.title}>

@@ -65,7 +65,7 @@ class NewPaletteForm extends Component {
     });
   };
   sortColors = () => {
-    var colors = this.state.colors;
+    var colors = [...this.state.colors];
     colors.sort(function(a, b) {
       if (a.name.toLowerCase() < b.name.toLowerCase()) {
         return -1;
@@ -114,7 +114,7 @@ class NewPaletteForm extends Component {
         // select random color from saved palettes
         random = Math.floor(Math.random() * allColors.length);
         randomColor = allColors[random];
-        if (colorsGenerated !== []) {
+        if (colorsGenerated.length > 0) {
           duplicate = colorsGenerated.some(
             color => color.name === randomColor.name
           );

@@ -30,15 +30,11 @@ class ColorBox extends Component {
     return (
       <CopyToClipboard text={background} onCopy={this.changCopyState}>
         <div className={classes.colorBox} style={{ background }}>
-          <div
-            className={`${classes.copyOverlay} ${copied &&
-              classes.showOverlay}`}
-            style={{ background }}
-          ></div>
-          <div className={`${classes.copyMsg} ${copied && classes.showMsg}`}>
-            <h1>Copied!</h1>
-            <p className={classes.copyText}>{background}</p>
-          </div>
+          {copied && (
+            <div className={`${classes.copyMsg} ${classes.showMsg}`} role='status'>
+              Copied <strong>{background}</strong>
+            </div>
+          )}
           <div>
             <div className={classes.boxContent}>
               <span className={classes.colorName}>{name}</span>
@@ -48,7 +44,7 @@ class ColorBox extends Component {
           {showingFullPalette && (
             <Link
               to={`/palette/${paletteId}/${id}`}
-              onClick={e => e.stopPropagation}
+              onClick={e => e.stopPropagation()}
             >
               <span className={classes.seeMore}>MORE</span>
             </Link>
