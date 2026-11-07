@@ -20,6 +20,7 @@ body {
 .paletteMetaPaper .MuiDialogContent-root { padding: 8px 20px 14px; }
 .paletteMetaPaper .MuiDialogActions-root { padding: 10px 20px 18px; gap: 8px; }
 .paletteMetaPaper .MuiButton-root { border-radius: 9px; text-transform: none; font-weight: 700; }
+.confirmDialogPaper { border-radius: 18px !important; overflow: hidden; }
 
 html[data-theme='dark'] {
   body { background: #101828; color: #f2f4f7; }
@@ -64,6 +65,11 @@ html[data-theme='dark'] {
   .paletteMetaPaper .MuiInputLabel-root { color: #98a2b3 !important; }
   .paletteMetaPaper .MuiButton-textPrimary { color: #a5b4fc !important; }
   .paletteMetaPaper .MuiButton-containedPrimary { background: #4f46e5 !important; color: #ffffff !important; }
+  .confirmDialogPaper { background: #1d2939 !important; color: #f2f4f7 !important; }
+  .confirmDialogPaper .MuiDialogTitle-root { color: #f2f4f7 !important; }
+  .confirmDialogPaper .MuiListItem-root { color: #f2f4f7 !important; }
+  .confirmDialogPaper .MuiListItem-root:hover { background: #344054 !important; }
+  .confirmDialogPaper .MuiListItemText-primary { color: #f2f4f7 !important; }
 }
 
 code {

@@ -111,6 +111,7 @@ class PaletteList extends Component {
           open={openDelete}
           aria-labelledby='delete-dialog-title'
           onClose={this.closeDialogDelete}
+          PaperProps={{ className: 'confirmDialogPaper' }}
         >
           <DialogTitle id='delete-dialog-title'>Delete Palette?</DialogTitle>
           <List>
@@ -138,6 +139,7 @@ class PaletteList extends Component {
           open={openReset}
           aria-labelledby='delete-dialog-title'
           onClose={this.closeDialogReset}
+          PaperProps={{ className: 'confirmDialogPaper' }}
         >
           <DialogTitle id='delete-dialog-title'>
             Reset All Palettes To Default?
