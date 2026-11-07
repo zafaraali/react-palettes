@@ -20,7 +20,17 @@ const styles = theme => ({
     color: '#182230',
     borderBottom: '1px solid #eaecf0',
     boxShadow: '0 2px 10px rgba(16, 24, 40, 0.04)',
-    padding: '0 14px'
+    padding: '0 14px',
+    [sizes.down('xs')]: {
+      flexWrap: 'wrap',
+      minHeight: 'auto',
+      padding: '6px 10px',
+      '& .MuiToolbar-root': {
+        width: '100%',
+        minHeight: '48px',
+        padding: 0
+      }
+    }
   },
   appBarShift: {
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
@@ -29,7 +39,7 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     }),
-    [sizes.down('sm')]: { width: 'calc(100% - 340px)' }
+    [sizes.down('sm')]: { width: 'calc(100% - 100vw)', marginLeft: '100vw' }
   },
   menuButton: {
     marginLeft: 0,
@@ -45,7 +55,11 @@ const styles = theme => ({
       textDecoration: 'none'
     },
     [sizes.down('xs')]: {
-      marginRight: '0'
+      width: '100%',
+      marginRight: '0',
+      paddingBottom: '4px',
+      '& > *, & > a': { flex: 1, minWidth: 0 },
+      '& .MuiButton-root': { width: '100%' }
     }
   },
   button: {

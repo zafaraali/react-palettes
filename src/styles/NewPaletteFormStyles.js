@@ -5,21 +5,25 @@ const styles = theme => ({
   root: {
     display: 'flex',
     background: '#f6f7fb',
-    minHeight: '100vh'
+    minHeight: '100vh',
+    [sizes.down('sm')]: { overflow: 'visible' }
   },
 
   drawer: {
     width: DRAWER_WIDTH,
-    flexShrink: 0
+    flexShrink: 0,
+    [sizes.down('sm')]: { width: '100vw' }
   },
   drawerPaper: {
     width: DRAWER_WIDTH,
     display: 'flex',
     alignItems: 'center',
     overflowX: 'hidden',
+    overflowY: 'auto',
     background: '#fff',
     borderRight: '1px solid #eaecf0',
-    [sizes.down('sm')]: { width: 'min(340px, 88vw)' }
+    maxWidth: '100vw',
+    [sizes.down('sm')]: { width: '100vw' }
   },
   drawerHeader: {
     display: 'flex',
@@ -38,7 +42,12 @@ const styles = theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     marginLeft: -DRAWER_WIDTH,
-    [sizes.down('sm')]: { marginLeft: '-340px' }
+    [sizes.down('sm')]: {
+      marginLeft: '-100vw',
+      height: 'calc(100vh - 90px)',
+      overflowY: 'auto',
+      paddingBottom: '88px'
+    }
   },
   contentShift: {
     transition: theme.transitions.create('margin', {

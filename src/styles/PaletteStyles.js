@@ -7,7 +7,8 @@ export default {
     overflow: 'hidden'
   },
   colors: {
-    height: '90%'
+    height: '90%',
+    [sizes.down('xs')]: { height: 'calc(100vh - 154px)' }
   },
   goBack: {
     [sizes.down('lg')]: { width: '25%', height: '33.333%' },
