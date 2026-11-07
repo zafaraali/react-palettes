@@ -80,8 +80,12 @@ class PaletteList extends Component {
               >
                 Reset
               </Button>
-              <Button className={classes.createPalettes}>
-                <Link to='/palette/new'>Create Palette</Link>
+              <Button
+                className={classes.createPalettes}
+                component={Link}
+                to='/palette/new'
+              >
+                Create Palette
               </Button>
             </div>
           </nav>
@@ -91,7 +95,13 @@ class PaletteList extends Component {
               <span className={classes.emptyIcon}>✦</span>
               <h2>Your library is empty</h2>
               <p>Create a palette to start building your color library.</p>
-              <Button className={classes.emptyButton}><Link to='/palette/new'>Create your first palette</Link></Button>
+              <Button
+                className={classes.emptyButton}
+                component={Link}
+                to='/palette/new'
+              >
+                Create your first palette
+              </Button>
             </div>
           ) : <TransitionGroup className={classes.palettes}>
             {palettes.map(palette => (

@@ -15,12 +15,55 @@ body {
   border-radius: 18px !important;
   padding: 6px;
   min-width: min(420px, calc(100vw - 32px));
+  max-width: calc(100vw - 24px) !important;
+  margin: 12px !important;
+  box-sizing: border-box !important;
+}
+.paletteMetaPaper .emoji-mart {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+.paletteMetaPaper .emoji-mart-scroll {
+  width: 100% !important;
+}
+.paletteMetaPaper .emoji-mart-search input {
+  width: 100% !important;
+  box-sizing: border-box;
 }
 .paletteMetaPaper .MuiDialogTitle-root { padding: 18px 20px 8px; }
 .paletteMetaPaper .MuiDialogContent-root { padding: 8px 20px 14px; }
 .paletteMetaPaper .MuiDialogActions-root { padding: 10px 20px 18px; gap: 8px; }
 .paletteMetaPaper .MuiButton-root { border-radius: 9px; text-transform: none; font-weight: 700; }
-.confirmDialogPaper { border-radius: 18px !important; overflow: hidden; }
+.confirmDialogPaper {
+  border-radius: 18px !important;
+  overflow: hidden;
+  max-width: calc(100vw - 32px) !important;
+  margin: 16px !important;
+}
+
+@media (max-width: 480px) {
+  .paletteMetaPaper {
+    min-width: calc(100vw - 24px);
+    padding: 4px;
+  }
+  .paletteMetaPaper .MuiDialogTitle-root {
+    padding: 14px 14px 6px;
+    font-size: 1.1rem;
+  }
+  .paletteMetaPaper .MuiDialogContent-root {
+    padding: 6px 14px 10px;
+  }
+  .paletteMetaPaper .MuiDialogActions-root {
+    padding: 8px 14px 14px;
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .paletteMetaPaper .MuiDialogActions-root .MuiButton-root {
+    width: 100%;
+    margin: 4px 0;
+  }
+}
 
 html[data-theme='dark'] {
   body { background: #101828; color: #f2f4f7; }
