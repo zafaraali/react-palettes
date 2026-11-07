@@ -8,6 +8,29 @@
 
 * { box-sizing: border-box; }
 button, a { -webkit-tap-highlight-color: transparent; }
+
+.theme-toggle {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 8px 6px 11px;
+  border: 1px solid #eaecf0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 20px rgba(16, 24, 40, 0.12);
+  backdrop-filter: blur(10px);
+}
+.theme-toggle-label { color: #667085; font-size: 0.72rem; font-weight: 700; }
+.theme-toggle select { border: 0; outline: 0; background: transparent; color: #182230; font: inherit; font-size: 0.75rem; font-weight: 700; cursor: pointer; }
+.theme-toggle option { background: #ffffff; color: #182230; }
+html[data-theme='dark'] .theme-toggle { border-color: #475467; background: rgba(29, 41, 57, 0.94); }
+html[data-theme='dark'] .theme-toggle-label, html[data-theme='dark'] .theme-toggle select { color: #f2f4f7; }
+html[data-theme='dark'] .theme-toggle option { background: #1d2939; color: #f2f4f7; }
+@media (max-width: 600px) { .theme-toggle { right: 12px; bottom: 12px; } }
 .page-enter {
   opacity: 0;
 }
