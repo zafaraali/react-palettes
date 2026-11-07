@@ -59,7 +59,7 @@ class PaletteMetaForm extends Component {
 
     return (
       <>
-        <Dialog open={stage === 'emoji'} onClose={hideForm}>
+        <Dialog open={stage === 'emoji'} onClose={hideForm} PaperProps={{ className: 'paletteMetaPaper' }}>
           <DialogTitle id='form-dialog-title'>Pick a Palette Emoji</DialogTitle>
 
           <Picker onSelect={this.savePalette} />
@@ -68,6 +68,7 @@ class PaletteMetaForm extends Component {
           open={stage === 'form'}
           onClose={this.handleClose}
           aria-labelledby='form-dialog-title'
+          PaperProps={{ className: 'paletteMetaPaper' }}
         >
           <DialogTitle id='form-dialog-title'>Enter a Palette Name</DialogTitle>
           <ValidatorForm onSubmit={this.changeStage}>

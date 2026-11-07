@@ -67,9 +67,13 @@ class PaletteList extends Component {
       <div className={classes.root}>
         <div className={classes.container}>
           <nav className={classes.nav}>
-            <h1 className={classes.heading}>React Palettes</h1>
-
             <div>
+              <p className={classes.intro}>Your color library</p>
+              <h1 className={classes.heading}>React Palettes</h1>
+              <p className={classes.description}>A curated space for your favorite color systems.</p>
+            </div>
+
+            <div className={classes.actions}>
               <Button
                 className={classes.resetPalettes}
                 onClick={this.resetCheck}
@@ -82,7 +86,14 @@ class PaletteList extends Component {
             </div>
           </nav>
 
-          <TransitionGroup className={classes.palettes}>
+          {palettes.length === 0 ? (
+            <div className={classes.emptyState}>
+              <span className={classes.emptyIcon}>✦</span>
+              <h2>Your library is empty</h2>
+              <p>Create a palette to start building your color library.</p>
+              <Button className={classes.emptyButton}><Link to='/palette/new'>Create your first palette</Link></Button>
+            </div>
+          ) : <TransitionGroup className={classes.palettes}>
             {palettes.map(palette => (
               <CSSTransition key={palette.id} classNames='fade' timeout={500}>
                 <MiniPalette
@@ -94,12 +105,13 @@ class PaletteList extends Component {
                 />
               </CSSTransition>
             ))}
-          </TransitionGroup>
+          </TransitionGroup>}
         </div>
         <Dialog
           open={openDelete}
           aria-labelledby='delete-dialog-title'
           onClose={this.closeDialogDelete}
+          PaperProps={{ className: 'confirmDialogPaper' }}
         >
           <DialogTitle id='delete-dialog-title'>Delete Palette?</DialogTitle>
           <List>
@@ -127,6 +139,7 @@ class PaletteList extends Component {
           open={openReset}
           aria-labelledby='delete-dialog-title'
           onClose={this.closeDialogReset}
+          PaperProps={{ className: 'confirmDialogPaper' }}
         >
           <DialogTitle id='delete-dialog-title'>
             Reset All Palettes To Default?

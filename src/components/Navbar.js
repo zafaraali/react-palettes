@@ -34,8 +34,8 @@ class Navbar extends Component {
           <Link to='/'>React Palette</Link>
         </div>
         {!isSingleColor && (
-          <div>
-            <span className={classes.level}>Level: {level}</span>
+          <div className={classes.levelControl}>
+            <span className={classes.level}>Shade <strong>{level}</strong></span>
             <div className={classes.slider}>
               <Slider
                 defaultValue={level}
@@ -48,7 +48,8 @@ class Navbar extends Component {
           </div>
         )}
         <div className={classes.selectContainer}>
-          <Select value={format} onChange={this.handleChange}>
+          <span className={classes.formatLabel}>Copy format</span>
+          <Select className={classes.formatSelect} value={format} onChange={this.handleChange}>
             <MenuItem value='hex'>HEX - #ffffff</MenuItem>
             <MenuItem value='rgb'>RGB - rgb(255,255,255)</MenuItem>
             <MenuItem value='rgba'>RGBA - rgba(255,255,255,1.0)</MenuItem>

@@ -8,14 +8,48 @@ import SingleColorPalette from './components/SingleColorPalette';
 import NewPaletteForm from './components/NewPaletteForm';
 import Page from './components/Page';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import ThemeContext from './ThemeContext';
 export default class App extends Component {
   constructor(props) {
     super(props);
     const savedPalettes = JSON.parse(window.localStorage.getItem('palettes'));
     this.state = {
-      palettes: savedPalettes || seedColors
+      palettes: savedPalettes || seedColors,
+      themeMode: window.localStorage.getItem('themeMode') || 'system'
     };
   }
+  componentDidMount() {
+    this.applyTheme();
+    this.systemThemeQuery = window.matchMedia
+      ? window.matchMedia('(prefers-color-scheme: dark)')
+      : null;
+    if (this.systemThemeQuery && this.systemThemeQuery.addListener) {
+      this.systemThemeQuery.addListener(this.handleSystemThemeChange);
+    }
+  }
+  componentDidUpdate(_, previousState) {
+    if (previousState.themeMode !== this.state.themeMode) {
+      window.localStorage.setItem('themeMode', this.state.themeMode);
+      this.applyTheme();
+    }
+  }
+  componentWillUnmount() {
+    if (this.systemThemeQuery && this.systemThemeQuery.removeListener) {
+      this.systemThemeQuery.removeListener(this.handleSystemThemeChange);
+    }
+  }
+  handleSystemThemeChange = () => {
+    if (this.state.themeMode === 'system') this.applyTheme();
+  };
+  applyTheme = () => {
+    const { themeMode } = this.state;
+    const prefersDark = this.systemThemeQuery
+      ? this.systemThemeQuery.matches
+      : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const effectiveTheme = themeMode === 'system' ? (prefersDark ? 'dark' : 'light') : themeMode;
+    document.documentElement.setAttribute('data-theme', effectiveTheme);
+  };
+  setThemeMode = themeMode => this.setState({ themeMode });
   findPalette = id => {
     return this.state.palettes.find(function(palette) {
       return palette.id === id;
@@ -52,8 +86,9 @@ export default class App extends Component {
   render() {
     const { palettes } = this.state;
     return (
-      <Route
-        render={({ location }) => (
+      <ThemeContext.Provider value={{ themeMode: this.state.themeMode, setThemeMode: this.setThemeMode }}>
+        <Route
+          render={({ location }) => (
           <TransitionGroup>
             <CSSTransition key={location.key} classNames='page' timeout={500}>
               <Switch location={location}>
@@ -125,8 +160,9 @@ export default class App extends Component {
               </Switch>
             </CSSTransition>
           </TransitionGroup>
-        )}
-      />
+          )}
+        />
+      </ThemeContext.Provider>
     );
   }
 }
