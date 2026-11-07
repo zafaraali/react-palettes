@@ -7,42 +7,54 @@ export default {
     overflow: 'hidden'
   },
   colors: {
-    height: '90%',
-    [sizes.down('xs')]: { height: 'calc(100vh - 154px)' }
+    flex: 1,
+    minHeight: 0,
+    overflowY: 'auto',
+    overflowX: 'hidden'
   },
   goBack: {
-    [sizes.down('lg')]: { width: '25%', height: '33.333%' },
-    [sizes.down('md')]: { width: '50%', height: '20%' },
-    [sizes.down('xs')]: { width: '100%', height: '10%' },
     width: '20%',
     height: '50%',
-    margin: '0 auto',
+    margin: '0',
     display: 'inline-block',
     position: 'relative',
     cursor: 'pointer',
     marginBottom: '-4px',
     opacity: '1',
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+    verticalAlign: 'top',
+    boxSizing: 'border-box',
+    [sizes.down('lg')]: { width: '25%', height: '33.333%' },
+    [sizes.down('md')]: { width: '50%', height: '20%' },
+    [sizes.down('xs')]: { width: '100%', height: '54px', minHeight: '54px', marginBottom: 0 }
   },
   backBtn: {
     width: '100px',
-    height: '30px',
+    height: '32px',
     position: 'absolute',
-    display: 'inline-block',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     top: '50%',
     left: '50%',
-    marginLeft: '-50px',
-    marginTop: '-15px',
+    transform: 'translate(-50%, -50%)',
     textAlign: 'center',
     outline: 'none',
     background: 'rgba(255, 255, 255, 0.3)',
-    fontSize: '1rem',
-    lineHeight: '30px',
+    fontSize: '0.9rem',
+    fontWeight: 700,
+    letterSpacing: '0.05em',
     color: 'white',
     textTransform: 'uppercase',
-    border: 'none',
+    border: '1px solid rgba(255, 255, 255, 0.35)',
+    borderRadius: '6px',
     opacity: '1',
     cursor: 'pointer',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    [sizes.down('xs')]: {
+      width: '120px',
+      height: '34px',
+      fontSize: '0.85rem'
+    }
   }
 };

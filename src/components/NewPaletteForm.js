@@ -150,9 +150,14 @@ class NewPaletteForm extends Component {
           }}
         >
           <div className={classes.drawerHeader}>
-            <IconButton onClick={this.handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
+            <span className={classes.drawerTitle}>Color Studio</span>
+            <Button
+              onClick={this.handleDrawerClose}
+              className={classes.closeDrawerBtn}
+              aria-label='Close drawer and view palette'
+            >
+              <ChevronLeftIcon /> Done / View Palette
+            </Button>
           </div>
           <Divider />
           <div className={classes.container}>
@@ -201,7 +206,7 @@ class NewPaletteForm extends Component {
             [classes.contentShift]: open
           })}
         >
-          <div className={classes.drawerHeader} />
+          <div className={classes.contentNavSpacer} />
           <DraggableColorList
             colors={colors}
             removeColor={this.removeColor}
