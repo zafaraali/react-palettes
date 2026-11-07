@@ -26,6 +26,10 @@ export default {
     [sizes.down('sm')]: {
       width: '50%',
       height: '10%'
+    },
+    [sizes.down('xs')]: {
+      width: '50%',
+      height: 'clamp(76px, 12vh, 104px)'
     }
   },
   boxContent: {
