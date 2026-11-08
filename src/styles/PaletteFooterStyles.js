@@ -1,7 +1,8 @@
 import sizes from './sizes';
 export default {
   paletteFooter: {
-    backgroundColor: 'white',
+    color: 'var(--footer-text)',
+    backgroundColor: 'var(--surface)',
     minHeight: '44px',
     height: '44px',
     display: 'flex',
@@ -11,7 +12,7 @@ export default {
     fontSize: '0.9rem',
     padding: '0 120px 0 18px',
     flexShrink: 0,
-    borderTop: '1px solid #eaecf0',
+    borderTop: '1px solid var(--border)',
     boxSizing: 'border-box',
     [sizes.down('xs')]: {
       fontSize: '0.82rem',

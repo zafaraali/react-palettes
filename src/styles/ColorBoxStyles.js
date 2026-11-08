@@ -1,11 +1,9 @@
-import chroma from 'chroma-js';
+import { readableText } from '../contrast';
 import sizes from './sizes';
-// Keep dark text for genuinely light swatches only; mid-tone colors stay white.
-const readableText = color => chroma(color).luminance() > 0.55 ? 'black' : 'white';
-export default {
+export default (_theme, props) => ({
   colorBox: {
     width: '20%',
-    height: props => (props.showingFullPalette ? '25%' : '50%'),
+    height: (props.showingFullPalette ? '25%' : '50%'),
     margin: '0',
     display: 'inline-block',
     position: 'relative',
@@ -16,32 +14,32 @@ export default {
     '&:hover button, &:focus-within button': { opacity: '1' },
     [sizes.down('lg')]: {
       width: '25%',
-      height: props => (props.showingFullPalette ? '20%' : '33.33333%')
+      height: (props.showingFullPalette ? '20%' : '33.33333%')
     },
     [sizes.down('md')]: {
       width: '50%',
-      height: props => (props.showingFullPalette ? '10%' : '20%')
+      height: (props.showingFullPalette ? '10%' : '20%')
     },
     [sizes.down('xs')]: {
       width: '100%',
-      height: '52px',
-      minHeight: '52px',
+      height: '64px',
+      minHeight: '64px',
       marginBottom: 0
     }
   },
-  copyText: { color: props => readableText(props.background) },
-  colorName: { color: props => readableText(props.background) },
+  copyText: { color: readableText(props.background) },
+  colorName: { color: readableText(props.background) },
   seeMore: {
     background: 'rgba(255, 255, 255, 0.3)',
     position: 'absolute',
     border: 'none',
     right: '0px',
     bottom: '0px',
-    color: props => readableText(props.background),
+    color: readableText(props.background, 0.3),
     width: '60px',
-    height: '30px',
+    height: '44px',
     textAlign: 'center',
-    lineHeight: '30px',
+    lineHeight: '44px',
     textTransform: 'uppercase',
     fontWeight: 600,
     fontSize: '0.8rem',
@@ -49,17 +47,17 @@ export default {
       top: '50%',
       bottom: 'auto',
       transform: 'translateY(-50%)',
-      height: '30px',
-      lineHeight: '30px',
+      height: '44px',
+      lineHeight: '44px',
       borderRadius: '6px 0 0 6px',
       fontSize: '0.75rem',
       fontWeight: 700
     }
   },
   copyButton: {
-    color: props => readableText(props.background),
+    color: readableText(props.background, 0.3),
     width: '90px',
-    height: '30px',
+    height: '44px',
     position: 'absolute',
     display: 'inline-block',
     top: '50%',
@@ -69,9 +67,9 @@ export default {
     outline: 'none',
     background: 'rgba(255, 255, 255, 0.3)',
     fontSize: '0.85rem',
-    lineHeight: '30px',
+    lineHeight: '44px',
     textTransform: 'uppercase',
-    opacity: '0.85',
+    opacity: 1,
     cursor: 'pointer',
     textDecoration: 'none',
     border: '1px solid rgba(255,255,255,.35)',
@@ -79,8 +77,8 @@ export default {
     [sizes.down('xs')]: {
       opacity: '1',
       width: '74px',
-      height: '28px',
-      lineHeight: '28px',
+      height: '44px',
+      lineHeight: '44px',
       fontSize: '0.75rem'
     }
   },
@@ -105,7 +103,7 @@ export default {
       transform: 'translateY(-50%)',
       fontSize: '11px',
       padding: '0 12px',
-      maxWidth: 'calc(100% - 150px)'
+      maxWidth: 'calc(50% - 48px)'
     }
   },
   copyMsg: {
@@ -133,4 +131,4 @@ export default {
     zIndex: '25',
     transition: 'all 0.2s ease-in-out'
   }
-};
+});

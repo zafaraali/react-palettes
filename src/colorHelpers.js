@@ -30,20 +30,11 @@ function generatePalette(starterPalette) {
 }
 function getRange(hexColor) {
   const end = '#fff';
-  return [
-    chroma(hexColor)
-      .darken(1.4)
-      .hex(),
-    hexColor,
-    end
-  ];
+  return [chroma(hexColor).darken(1.4).hex(), hexColor, end];
 }
 
 function getScale(hexColor, numberOfColors) {
-  return chroma
-    .scale(getRange(hexColor))
-    .mode('lab')
-    .colors(numberOfColors);
+  return chroma.scale(getRange(hexColor)).mode('lab').colors(numberOfColors);
 }
 
 export { generatePalette };

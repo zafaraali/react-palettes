@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from 'tss-react/mui';
 import styles from '../styles/PaletteFooterStyles';
 function PaletteFooter(props) {
   const { paletteName, emoji, classes } = props;
@@ -11,4 +11,4 @@ function PaletteFooter(props) {
   );
 }
 
-export default withStyles(styles)(PaletteFooter);
+export default withStyles(PaletteFooter, styles);

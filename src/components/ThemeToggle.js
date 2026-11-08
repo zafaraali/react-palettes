@@ -10,7 +10,7 @@ export default function ThemeToggle() {
       <select
         aria-label='Choose color theme'
         value={themeMode}
-        onChange={event => setThemeMode(event.target.value)}
+        onChange={(event) => setThemeMode(event.target.value)}
       >
         <option value='system'>System</option>
         <option value='light'>Light</option>

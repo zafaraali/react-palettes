@@ -1,7 +1,9 @@
 import sizes from './sizes';
 export default {
   Palette: {
-    height: '100vh',
+    background: 'var(--palette-bg)',
+    color: 'var(--palette-text)',
+    height: '100dvh',
     display: 'flex',
     flexDirection: 'column',
     overflow: 'hidden'
@@ -21,16 +23,21 @@ export default {
     cursor: 'pointer',
     marginBottom: '-4px',
     opacity: '1',
-    backgroundColor: 'black',
+    backgroundColor: 'var(--back-bg)',
     verticalAlign: 'top',
     boxSizing: 'border-box',
     [sizes.down('lg')]: { width: '25%', height: '33.333%' },
     [sizes.down('md')]: { width: '50%', height: '20%' },
-    [sizes.down('xs')]: { width: '100%', height: '54px', minHeight: '54px', marginBottom: 0 }
+    [sizes.down('xs')]: {
+      width: '100%',
+      height: '54px',
+      minHeight: '54px',
+      marginBottom: 0
+    }
   },
   backBtn: {
     width: '100px',
-    height: '32px',
+    height: '44px',
     position: 'absolute',
     display: 'inline-flex',
     alignItems: 'center',
@@ -40,7 +47,7 @@ export default {
     transform: 'translate(-50%, -50%)',
     textAlign: 'center',
     outline: 'none',
-    background: 'rgba(255, 255, 255, 0.3)',
+    background: 'var(--back-button-bg)',
     fontSize: '0.9rem',
     fontWeight: 700,
     letterSpacing: '0.05em',
@@ -53,7 +60,7 @@ export default {
     textDecoration: 'none',
     [sizes.down('xs')]: {
       width: '120px',
-      height: '34px',
+      height: '44px',
       fontSize: '0.85rem'
     }
   }

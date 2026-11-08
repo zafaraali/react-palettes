@@ -3,12 +3,11 @@ import ColorBox from './ColorBox';
 import Navbar from './Navbar';
 import { Link } from 'react-router-dom';
 import PaletteFooter from './PaletteFooter';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from 'tss-react/mui';
 import styles from '../styles/PaletteStyles';
 class SingleColorPalette extends Component {
   constructor(props) {
     super(props);
-    this._shades = this.gatherShades(this.props.palette, this.props.colorId);
     this.state = {
       format: 'hex'
     };
@@ -19,12 +18,12 @@ class SingleColorPalette extends Component {
     let allColors = palette.colors;
     for (var key in allColors) {
       shades = shades.concat(
-        allColors[key].filter(color => color.id === colorId)
+        allColors[key].filter((color) => color.id === colorId)
       );
     }
     return shades.slice(1);
   };
-  changeFormat = val => {
+  changeFormat = (val) => {
     this.setState({
       format: val
     });
@@ -33,7 +32,10 @@ class SingleColorPalette extends Component {
     const { paletteName, emoji, id } = this.props.palette;
     const { format } = this.state;
     const { classes } = this.props;
-    const colorBoxes = this._shades.map(color => (
+    const colorBoxes = this.gatherShades(
+      this.props.palette,
+      this.props.colorId
+    ).map((color) => (
       <ColorBox
         key={color.name}
         name={color.name}
@@ -55,4 +57,4 @@ class SingleColorPalette extends Component {
     );
   }
 }
-export default withStyles(styles)(SingleColorPalette);
+export default withStyles(SingleColorPalette, styles);

@@ -1,6 +1,6 @@
 import { DRAWER_WIDTH } from '../consts';
 import sizes from './sizes';
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     display: 'flex'
   },
@@ -16,9 +16,9 @@ const styles = theme => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     minHeight: '64px',
-    backgroundColor: '#ffffff',
-    color: '#182230',
-    borderBottom: '1px solid #eaecf0',
+    backgroundColor: 'var(--surface)',
+    color: 'var(--text)',
+    borderBottom: '1px solid var(--border)',
     boxShadow: '0 2px 10px rgba(16, 24, 40, 0.04)',
     padding: '0 14px',
     [sizes.down('sm')]: {
@@ -49,6 +49,8 @@ const styles = theme => ({
     }
   },
   menuButton: {
+    minWidth: 44,
+    minHeight: 44,
     marginLeft: 0,
     marginRight: 8,
     color: '#667085',
@@ -72,6 +74,7 @@ const styles = theme => ({
     }
   },
   button: {
+    minHeight: 44,
     margin: 0,
     borderRadius: '9px',
     textTransform: 'none',

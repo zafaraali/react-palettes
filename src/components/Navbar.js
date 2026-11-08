@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import Select from '@material-ui/core/Select';
-import Snackbar from '@material-ui/core/Snackbar';
-import CloseIcon from '@material-ui/icons/Close';
-import { withStyles } from '@material-ui/styles';
-import Slider from 'rc-slider';
+import Select from '@mui/material/Select';
+import Snackbar from '@mui/material/Snackbar';
+import CloseIcon from '@mui/icons-material/Close';
+import { withStyles } from 'tss-react/mui';
+import Slider from '@mui/material/Slider';
 import { Link } from 'react-router-dom';
-import 'rc-slider/assets/index.css';
-import { MenuItem, IconButton } from '@material-ui/core';
+import { MenuItem, IconButton } from '@mui/material';
 import styles from '../styles/NavbarStyles.js';
 class Navbar extends Component {
   constructor(props) {
@@ -16,7 +15,7 @@ class Navbar extends Component {
       open: false
     };
   }
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ format: e.target.value, open: true });
     this.props.handleChange(e.target.value);
   };
@@ -35,21 +34,29 @@ class Navbar extends Component {
         </div>
         {!isSingleColor && (
           <div className={classes.levelControl}>
-            <span className={classes.level}>Shade <strong>{level}</strong></span>
+            <span className={classes.level}>
+              Shade <strong>{level}</strong>
+            </span>
             <div className={classes.slider}>
               <Slider
                 defaultValue={level}
                 min={100}
                 max={900}
                 step={100}
-                onAfterChange={changeLevel}
+                onChangeCommitted={(_event, value) => changeLevel(value)}
+                aria-label="Shade"
               />
             </div>
           </div>
         )}
         <div className={classes.selectContainer}>
           <span className={classes.formatLabel}>Copy format</span>
-          <Select className={classes.formatSelect} value={format} onChange={this.handleChange}>
+          <Select
+            inputProps={{ 'aria-label': 'Copy format' }}
+            className={classes.formatSelect}
+            value={format}
+            onChange={this.handleChange}
+          >
             <MenuItem value='hex'>HEX - #ffffff</MenuItem>
             <MenuItem value='rgb'>RGB - rgb(255,255,255)</MenuItem>
             <MenuItem value='rgba'>RGBA - rgba(255,255,255,1.0)</MenuItem>
@@ -82,4 +89,4 @@ class Navbar extends Component {
   }
 }
 
-export default withStyles(styles)(Navbar);
+export default withStyles(Navbar, styles);

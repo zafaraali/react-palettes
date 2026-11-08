@@ -1,10 +1,10 @@
 import { DRAWER_WIDTH } from '../consts';
 import sizes from './sizes';
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     display: 'flex',
-    background: '#f6f7fb',
+    background: 'var(--page-bg)',
     minHeight: '100vh',
     overflowX: 'hidden'
   },
@@ -13,24 +13,26 @@ const styles = theme => ({
     width: DRAWER_WIDTH,
     flexShrink: 0,
     [sizes.down('sm')]: {
-      width: '100%',
-      position: 'relative'
+      width: 0
     }
   },
   drawerPaper: {
+    color: 'var(--text)',
     width: DRAWER_WIDTH,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     overflowX: 'hidden',
     overflowY: 'auto',
-    background: '#fff',
-    borderRight: '1px solid #eaecf0',
+    background: 'var(--surface)',
+    borderRight: '1px solid var(--border)',
     maxWidth: '100vw',
     boxSizing: 'border-box',
     [sizes.down('sm')]: {
       width: '100%',
-      zIndex: 1200
+      height: '100dvh',
+      maxHeight: '100dvh',
+      paddingBottom: 'env(safe-area-inset-bottom, 0px)'
     }
   },
   drawerHeader: {
@@ -51,7 +53,7 @@ const styles = theme => ({
   drawerTitle: {
     fontWeight: 700,
     fontSize: '0.95rem',
-    color: '#182230',
+    color: 'var(--text)',
     display: 'none',
     [sizes.down('sm')]: {
       display: 'block'
@@ -80,32 +82,26 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    height: '100vh',
+    height: '100dvh',
     padding: 0,
     boxSizing: 'border-box',
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
     marginLeft: -DRAWER_WIDTH,
     overflowY: 'auto',
     overflowX: 'hidden',
     [sizes.down('sm')]: {
-      marginLeft: '-100%',
-      height: '100vh',
-      paddingBottom: '80px'
+      marginLeft: 0,
+      width: '100%',
+      flexShrink: 0,
+      height: '100dvh',
+      paddingBottom: 'calc(80px + env(safe-area-inset-bottom, 0px))'
     }
   },
   contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    }),
     marginLeft: 0
   },
   container: {
     width: 'calc(100% - 40px)',
-    minHeight: '100%',
+    minHeight: 0,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -121,7 +117,7 @@ const styles = theme => ({
       fontSize: '1.65rem',
       fontWeight: 800,
       letterSpacing: '-.04em',
-      color: '#182230',
+      color: 'var(--text)',
       margin: '0 0 12px',
       [sizes.down('xs')]: {
         fontSize: '1.25rem',
@@ -135,7 +131,8 @@ const styles = theme => ({
     gridTemplateColumns: 'repeat(3, 1fr)',
     gap: '6px',
     [sizes.down('xs')]: {
-      gap: '4px'
+      gridTemplateColumns: '1fr',
+      gap: '6px'
     }
   },
   button: {
@@ -145,6 +142,7 @@ const styles = theme => ({
     textTransform: 'none',
     fontWeight: 700,
     fontSize: '0.75rem',
+    minHeight: 44,
     padding: '6px 4px',
     whiteSpace: 'nowrap',
     [sizes.down('xs')]: {

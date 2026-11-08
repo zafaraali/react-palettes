@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
+import { withStyles } from 'tss-react/mui';
+import Drawer from '@mui/material/Drawer';
 import PaletteFormNav from './PaletteFormNav';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import Button from '@material-ui/core/Button';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import Button from '@mui/material/Button';
 import DraggableColorList from './DraggableColorList';
-import { arrayMove } from 'react-sortable-hoc';
+import { arrayMove } from '@dnd-kit/sortable';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import ColorPickerForm from './ColorPickerForm';
 import styles from '../styles/NewPaletteFormStyles';
 import seedColors from '../seedColors';
+import { fillPalette } from '../paletteHelpers';
 class NewPaletteForm extends Component {
   static defaultProps = {
     maxColors: 20
@@ -33,25 +34,25 @@ class NewPaletteForm extends Component {
     this.setState({ open: false });
   };
 
-  addNewColor = newColor => {
-    this.setState({ colors: [...this.state.colors, newColor] });
+  addNewColor = (newColor) => {
+    this.setState(({ colors }) => ({ colors: [...colors, newColor] }));
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     });
   };
 
-  handleSubmit = newPalette => {
+  handleSubmit = (newPalette) => {
     newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g, '-');
     newPalette.colors = this.state.colors;
     this.props.savePalette(newPalette);
     this.props.history.push('/');
   };
-  removeColor = name => {
+  removeColor = (name) => {
     this.setState({
-      colors: this.state.colors.filter(color => color.name !== name)
+      colors: this.state.colors.filter((color) => color.name !== name)
     });
   };
   onSortEnd = ({ oldIndex, newIndex }) => {
@@ -66,7 +67,7 @@ class NewPaletteForm extends Component {
   };
   sortColors = () => {
     var colors = [...this.state.colors];
-    colors.sort(function(a, b) {
+    colors.sort(function (a, b) {
       if (a.name.toLowerCase() < b.name.toLowerCase()) {
         return -1;
       }
@@ -81,58 +82,26 @@ class NewPaletteForm extends Component {
   };
 
   addRandomColor = () => {
-    var allColors = seedColors.map(p => p.colors).flat();
-    var random;
-    var randomColor;
-    var duplicate = true;
-    //check if color exists
-    while (duplicate) {
-      // select random color from saved palettes
-      random = Math.floor(Math.random() * allColors.length);
-      randomColor = allColors[random];
-      duplicate = this.state.colors.some(
-        color => color.name === randomColor.name
-      );
-    }
-    this.setState({
-      colors: [...this.state.colors, randomColor]
-    });
+    this.setState(({ colors }) => ({
+      colors: fillPalette(
+        colors,
+        Math.min(colors.length + 1, this.props.maxColors)
+      )
+    }));
   };
 
   generatePalette = () => {
-    var allColors = seedColors.map(p => p.colors).flat();
-    var colorsGenerated = this.state.colors;
-    for (
-      var index = this.state.colors.length;
-      index < this.props.maxColors;
-      index++
-    ) {
-      var random, randomColor;
-      var duplicate = true;
-      //check if color exists
-      while (duplicate) {
-        // select random color from saved palettes
-        random = Math.floor(Math.random() * allColors.length);
-        randomColor = allColors[random];
-        if (colorsGenerated.length > 0) {
-          duplicate = colorsGenerated.some(
-            color => color.name === randomColor.name
-          );
-        }
-      }
-      colorsGenerated = [...colorsGenerated, randomColor];
-    }
-    this.setState({
-      colors: colorsGenerated
-    });
+    this.setState(({ colors }) => ({
+      colors: fillPalette(colors, this.props.maxColors)
+    }));
   };
 
   render() {
-    const { classes, maxColors, palettes } = this.props;
+    const { classes, maxColors, palettes, mobile } = this.props;
     const { open, colors } = this.state;
     const paletteFull = colors.length >= maxColors;
     return (
-      <div className={classes.root}>
+      <div className={`${classes.root} palette-editor`}>
         <PaletteFormNav
           open={open}
           palettes={palettes}
@@ -142,11 +111,14 @@ class NewPaletteForm extends Component {
         />
         <Drawer
           className={classes.drawer}
-          variant='persistent'
+          variant={mobile ? 'temporary' : 'persistent'}
+          onClose={this.handleDrawerClose}
+          ModalProps={{ keepMounted: mobile }}
+          slotProps={{ paper: { 'aria-label': 'Color studio' } }}
           anchor='left'
           open={open}
           classes={{
-            paper: classes.drawerPaper
+            paper: `${classes.drawerPaper} palette-drawer`
           }}
         >
           <div className={classes.drawerHeader}>
@@ -203,20 +175,23 @@ class NewPaletteForm extends Component {
 
         <main
           className={classNames(classes.content, {
-            [classes.contentShift]: open
+            [classes.contentShift]: open && !mobile
           })}
         >
           <div className={classes.contentNavSpacer} />
           <DraggableColorList
             colors={colors}
             removeColor={this.removeColor}
-            axis='xy'
             onSortEnd={this.onSortEnd}
-            distance={20}
           />
         </main>
       </div>
     );
   }
 }
-export default withStyles(styles, { withTheme: true })(NewPaletteForm);
+const StyledNewPaletteForm = withStyles(NewPaletteForm, styles);
+export default function ResponsiveNewPaletteForm(props) {
+  const mobile = useMediaQuery('(max-width: 768px)');
+  return <StyledNewPaletteForm {...props} mobile={mobile} />;
+}
+

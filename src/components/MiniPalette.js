@@ -1,19 +1,17 @@
 import React, { PureComponent } from 'react';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from 'tss-react/mui';
 import styles from '../styles/MiniPaletteStyles';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import { Link } from 'react-router-dom';
 class MiniPalette extends PureComponent {
-  deletePalette = e => {
+  deletePalette = (e) => {
     e.stopPropagation();
     this.props.openDialog(this.props.id);
   };
-  handleClick = () => {
-    this.props.goToPalette(this.props.id);
-  };
   render() {
-    const { classes, paletteName, emoji, colors } = this.props;
-    const miniColorBoxes = colors.map(color => (
+    const { classes, paletteName, emoji, colors, id } = this.props;
+    const miniColorBoxes = colors.map((color) => (
       <div
         className={classes.miniColor}
         style={{ backgroundColor: color.color }}
@@ -22,18 +20,28 @@ class MiniPalette extends PureComponent {
     ));
 
     return (
-      <div className={classes.root} onClick={this.handleClick}>
-        <IconButton className={classes.deleteIcon} onClick={this.deletePalette} aria-label={`Delete ${paletteName}`}>
+      <div className={classes.root}>
+        <IconButton
+          className={`${classes.deleteIcon} palette-delete`}
+          onClick={this.deletePalette}
+          aria-label={`Delete ${paletteName}`}
+        >
           <DeleteIcon />
         </IconButton>
 
-        <div className={classes.colors}>{miniColorBoxes} </div>
-        <h5 className={classes.title}>
-          {paletteName}
-          <span className={classes.emoji}>{emoji}</span>
-        </h5>
+        <Link
+          className={classes.paletteLink}
+          to={`/palette/${id}`}
+          aria-label={`Open ${paletteName}`}
+        >
+          <div className={classes.colors}>{miniColorBoxes} </div>
+          <h5 className={classes.title}>
+            {paletteName}
+            <span className={classes.emoji}>{emoji}</span>
+          </h5>
+        </Link>
       </div>
     );
   }
 }
-export default withStyles(styles)(MiniPalette);
+export default withStyles(MiniPalette, styles);
