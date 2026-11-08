@@ -1,10 +1,13 @@
 .page {
   min-height: 100vh;
   min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
+  overflow: hidden;
   transition: opacity 0.5s ease-in-out;
 }
 
@@ -70,7 +73,7 @@ html[data-theme='dark'] .theme-toggle option {
     position: absolute;
     min-height: 100%;
     min-height: 100dvh;
-    height: auto;
+    height: 100%;
     overflow-x: hidden;
   }
   .theme-toggle {

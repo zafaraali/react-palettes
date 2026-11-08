@@ -3,6 +3,7 @@ export default {
   root: {
     backgroundColor: 'var(--page-bg)',
     minHeight: '100vh',
+    height: '100%',
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'center',
