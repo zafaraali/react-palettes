@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import { Picker } from 'emoji-mart';
-import 'emoji-mart/css/emoji-mart.css';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { Component, lazy, Suspense } from 'react';
+const EmojiPicker = lazy(() => import('./EmojiPicker')); 
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 class PaletteMetaForm extends Component {
@@ -19,12 +18,16 @@ class PaletteMetaForm extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
-    ValidatorForm.addValidationRule('isPaletteNameUnique', value =>
+    ValidatorForm.addValidationRule('isPaletteNameUnique', (value) =>
       this.props.palettes.every(
         ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
       )
     );
   }
+  componentWillUnmount() {
+    ValidatorForm.removeValidationRule('isPaletteNameUnique');
+  }
+
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value
@@ -35,14 +38,14 @@ class PaletteMetaForm extends Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false }, this.props.hideForm());
+    this.setState({ open: false }, this.props.hideForm);
   };
   changeStage = () => {
     this.setState({
       stage: 'emoji'
     });
   };
-  savePalette = emoji => {
+  savePalette = (emoji) => {
     const palette = {
       paletteName: this.state.newPaletteName,
       emoji: emoji.native
@@ -59,10 +62,17 @@ class PaletteMetaForm extends Component {
 
     return (
       <>
-        <Dialog open={stage === 'emoji'} onClose={hideForm} PaperProps={{ className: 'paletteMetaPaper' }}>
-          <DialogTitle id='form-dialog-title'>Pick a Palette Emoji</DialogTitle>
+        <Dialog
+          aria-labelledby='emoji-dialog-title'
+          open={stage === 'emoji'}
+          onClose={hideForm}
+          PaperProps={{ className: 'paletteMetaPaper' }}
+        >
+          <DialogTitle id='emoji-dialog-title'>
+            Pick a Palette Emoji
+          </DialogTitle>
 
-          <Picker onSelect={this.savePalette} />
+          {stage === 'emoji' && <Suspense fallback={<div role='status'>Loading emojis…</div>}><EmojiPicker onSelect={this.savePalette} /></Suspense>}
         </Dialog>
         <Dialog
           open={stage === 'form'}
@@ -77,6 +87,7 @@ class PaletteMetaForm extends Component {
                 Please enter a name for your new palette.
               </DialogContentText>
               <TextValidator
+                id='palette-name'
                 label='Palette Name'
                 value={newPaletteName}
                 name='newPaletteName'

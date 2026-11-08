@@ -1,15 +1,23 @@
 .page {
   min-height: 100vh;
   min-height: 100dvh;
+  height: 100vh;
+  height: 100dvh;
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
+  overflow: hidden;
   transition: opacity 0.5s ease-in-out;
 }
 
-* { box-sizing: border-box; }
-button, a { -webkit-tap-highlight-color: transparent; }
+* {
+  box-sizing: border-box;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
 
 .theme-toggle {
   position: fixed;
@@ -28,18 +36,44 @@ button, a { -webkit-tap-highlight-color: transparent; }
   backdrop-filter: blur(10px);
   touch-action: manipulation;
 }
-.theme-toggle-label { color: #667085; font-size: 0.72rem; font-weight: 700; }
-.theme-toggle select { min-height: 32px; border: 0; outline: 0; background: transparent; color: #182230; font: inherit; font-size: 0.75rem; font-weight: 700; cursor: pointer; }
-.theme-toggle option { background: #ffffff; color: #182230; }
-html[data-theme='dark'] .theme-toggle { border-color: #475467; background: rgba(29, 41, 57, 0.94); }
-html[data-theme='dark'] .theme-toggle-label, html[data-theme='dark'] .theme-toggle select { color: #f2f4f7; }
-html[data-theme='dark'] .theme-toggle option { background: #1d2939; color: #f2f4f7; }
+.theme-toggle-label {
+  color: #667085;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.theme-toggle select {
+  min-height: 32px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #182230;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.theme-toggle option {
+  background: #ffffff;
+  color: #182230;
+}
+html[data-theme='dark'] .theme-toggle {
+  border-color: #475467;
+  background: rgba(29, 41, 57, 0.94);
+}
+html[data-theme='dark'] .theme-toggle-label,
+html[data-theme='dark'] .theme-toggle select {
+  color: #f2f4f7;
+}
+html[data-theme='dark'] .theme-toggle option {
+  background: #1d2939;
+  color: #f2f4f7;
+}
 @media (max-width: 600px) {
   .page {
     position: absolute;
     min-height: 100%;
     min-height: 100dvh;
-    height: auto;
+    height: 100%;
     overflow-x: hidden;
   }
   .theme-toggle {
@@ -49,15 +83,29 @@ html[data-theme='dark'] .theme-toggle option { background: #1d2939; color: #f2f4
     padding: 3px 6px 3px 9px;
     gap: 5px;
   }
-  .theme-toggle-label { font-size: 0.68rem; }
-  .theme-toggle select { min-height: 28px; font-size: 0.7rem; }
+  .theme-toggle-label {
+    font-size: 0.68rem;
+  }
+  .theme-toggle select {
+    min-height: 28px;
+    font-size: 0.7rem;
+  }
 }
 .page-enter {
+  z-index: 1;
   opacity: 0;
 }
 .page-enter-active {
+  z-index: 1;
   opacity: 1;
 }
 .page-exit-active {
   opacity: 0;
+}
+.page-exit { pointer-events: none; z-index: 0; }
+
+.fade-exit { opacity: 1; }
+.fade-exit-active { opacity: 0; transition: opacity 500ms ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .page, .fade-exit-active { transition: none; }
 }

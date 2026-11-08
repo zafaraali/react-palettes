@@ -1,8 +1,8 @@
 import sizes from './sizes';
 export default {
   root: {
-    backgroundColor: 'white',
-    border: '1px solid #eaecf0',
+    backgroundColor: 'var(--surface)',
+    border: '1px solid var(--border)',
     borderRadius: '16px',
     padding: '8px',
     position: 'relative',
@@ -13,7 +13,13 @@ export default {
       transform: 'translateY(-4px)',
       boxShadow: '0 14px 28px rgba(16, 24, 40, 0.11)'
     },
-    '&:hover $deleteIcon, &:focus-within $deleteIcon': { opacity: '1' }
+    '&:hover .palette-delete, &:focus-within .palette-delete': { opacity: '1' }
+  },
+  paletteLink: {
+    display: 'block',
+    color: 'inherit',
+    textDecoration: 'none',
+    borderRadius: '10px'
   },
   colors: {
     backgroundColor: '#dae1e4',
@@ -30,7 +36,7 @@ export default {
     justifyContent: 'space-between',
     alignItems: 'center',
     margin: 0,
-    color: '#182230',
+    color: 'var(--text)',
     padding: '12px 6px 5px',
     fontSize: '0.95rem',
     fontWeight: 700,
@@ -48,8 +54,8 @@ export default {
   deleteIcon: {
     color: '#667085',
     backgroundColor: '#fff',
-    width: '36px',
-    height: '36px',
+    width: '44px',
+    height: '44px',
     position: 'absolute',
     right: '12px',
     top: '12px',

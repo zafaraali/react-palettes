@@ -1,27 +1,26 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import MiniPalette from './MiniPalette';
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from 'tss-react/mui';
 import styles from '../styles/PaletteListStyles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import CheckIcon from '@material-ui/icons/Check';
-import CloseIcon from '@material-ui/icons/Close';
-import blue from '@material-ui/core/colors/blue';
-import red from '@material-ui/core/colors/red';
-import Button from '@material-ui/core/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import { blue, red } from '@mui/material/colors';
+import Button from '@mui/material/Button';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 class PaletteList extends Component {
   constructor(props) {
     super(props);
     this.state = { openDelete: false, openReset: false, deleteId: '' };
   }
-  openDialogDelete = id => {
+  openDialogDelete = (id) => {
     this.setState({
       openDelete: true,
       deleteId: id
@@ -33,7 +32,7 @@ class PaletteList extends Component {
       deleteId: ''
     });
   };
-  openDialogReset = id => {
+  openDialogReset = (id) => {
     this.setState({
       openReset: true,
       deleteId: id
@@ -45,7 +44,7 @@ class PaletteList extends Component {
       deleteId: ''
     });
   };
-  goToPalette = id => {
+  goToPalette = (id) => {
     this.props.history.push(`/palette/${id}`);
   };
   handleDelete = () => {
@@ -70,7 +69,9 @@ class PaletteList extends Component {
             <div>
               <p className={classes.intro}>Your color library</p>
               <h1 className={classes.heading}>React Palettes</h1>
-              <p className={classes.description}>A curated space for your favorite color systems.</p>
+              <p className={classes.description}>
+                A curated space for your favorite color systems.
+              </p>
             </div>
 
             <div className={classes.actions}>
@@ -103,19 +104,21 @@ class PaletteList extends Component {
                 Create your first palette
               </Button>
             </div>
-          ) : <TransitionGroup className={classes.palettes}>
-            {palettes.map(palette => (
-              <CSSTransition key={palette.id} classNames='fade' timeout={500}>
-                <MiniPalette
-                  {...palette}
-                  goToPalette={this.goToPalette}
-                  openDialog={this.openDialogDelete}
-                  key={palette.id}
-                  id={palette.id}
-                />
-              </CSSTransition>
-            ))}
-          </TransitionGroup>}
+          ) : (
+            <TransitionGroup className={classes.palettes}>
+              {palettes.map((palette) => (
+                <CSSTransition key={palette.id} classNames='fade' timeout={500}>
+                  <MiniPalette
+                    {...palette}
+                    goToPalette={this.goToPalette}
+                    openDialog={this.openDialogDelete}
+                    key={palette.id}
+                    id={palette.id}
+                  />
+                </CSSTransition>
+              ))}
+            </TransitionGroup>
+          )}
         </div>
         <Dialog
           open={openDelete}
@@ -125,15 +128,15 @@ class PaletteList extends Component {
         >
           <DialogTitle id='delete-dialog-title'>Delete Palette?</DialogTitle>
           <List>
-            <ListItem button onClick={this.handleDelete}>
+            <ListItemButton onClick={this.handleDelete}>
               <ListItemAvatar>
                 <Avatar style={{ backgroundColor: red[100], color: red[600] }}>
                   <CheckIcon></CheckIcon>
                 </Avatar>
               </ListItemAvatar>
               <ListItemText>Delete</ListItemText>
-            </ListItem>
-            <ListItem button onClick={this.closeDialogDelete}>
+            </ListItemButton>
+            <ListItemButton onClick={this.closeDialogDelete}>
               <ListItemAvatar>
                 <Avatar
                   style={{ backgroundColor: blue[100], color: blue[600] }}
@@ -142,7 +145,7 @@ class PaletteList extends Component {
                 </Avatar>
               </ListItemAvatar>
               <ListItemText>Cancel</ListItemText>
-            </ListItem>
+            </ListItemButton>
           </List>
         </Dialog>
         <Dialog
@@ -155,15 +158,15 @@ class PaletteList extends Component {
             Reset All Palettes To Default?
           </DialogTitle>
           <List>
-            <ListItem button onClick={this.handleReset}>
+            <ListItemButton onClick={this.handleReset}>
               <ListItemAvatar>
                 <Avatar style={{ backgroundColor: red[100], color: red[600] }}>
                   <CheckIcon></CheckIcon>
                 </Avatar>
               </ListItemAvatar>
               <ListItemText>Reset</ListItemText>
-            </ListItem>
-            <ListItem button onClick={this.closeDialogReset}>
+            </ListItemButton>
+            <ListItemButton onClick={this.closeDialogReset}>
               <ListItemAvatar>
                 <Avatar
                   style={{ backgroundColor: blue[100], color: blue[600] }}
@@ -172,11 +175,11 @@ class PaletteList extends Component {
                 </Avatar>
               </ListItemAvatar>
               <ListItemText>Cancel</ListItemText>
-            </ListItem>
+            </ListItemButton>
           </List>
         </Dialog>
       </div>
     );
   }
 }
-export default withStyles(styles)(PaletteList);
+export default withStyles(PaletteList, styles);

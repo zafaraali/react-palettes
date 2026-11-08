@@ -1,36 +1,22 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Button from '@material-ui/core/Button';
-import { ValidatorForm } from 'react-material-ui-form-validator';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from 'tss-react/mui';
 import PaletteMetaForm from './PaletteMetaForm';
 import styles from '../styles/PaletteFormNavStyles';
 class PaletteFormNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newPaletteName: '',
       showForm: false
     };
   }
-  componentDidMount() {
-    ValidatorForm.addValidationRule('PaletteNameUnique', value =>
-      this.props.palettes.every(
-        ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()
-      )
-    );
-  }
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
   showForm = () => {
     this.setState({ showForm: true });
   };
@@ -43,20 +29,15 @@ class PaletteFormNav extends Component {
     this.props.sortColors();
   };
   render() {
-    const {
-      classes,
-      open,
-      palettes,
-      handleSubmit,
-      handleDrawerOpen
-    } = this.props;
+    const { classes, open, palettes, handleSubmit, handleDrawerOpen } =
+      this.props;
     const { showForm } = this.state;
     return (
       <div className={classes.root}>
         <AppBar
           position='fixed'
           color='default'
-          className={classNames(classes.appBar, {
+          className={classNames(classes.appBar, 'palette-form-nav', {
             [classes.appBarShift]: open
           })}
         >
@@ -83,15 +64,15 @@ class PaletteFormNav extends Component {
             >
               Auto-Sort
             </Button>
-            <Link to='/'>
-              <Button
-                className={classes.button}
-                variant='contained'
-                color='secondary'
-              >
-                Go Back
-              </Button>
-            </Link>
+            <Button
+              component={Link}
+              to='/'
+              className={classes.button}
+              variant='contained'
+              color='secondary'
+            >
+              Go Back
+            </Button>
 
             <Button
               className={classes.button}
@@ -114,4 +95,4 @@ class PaletteFormNav extends Component {
     );
   }
 }
-export default withStyles(styles, { withTheme: true })(PaletteFormNav);
+export default withStyles(PaletteFormNav, styles);

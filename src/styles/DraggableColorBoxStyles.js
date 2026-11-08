@@ -1,68 +1,12 @@
-import sizes from './sizes';
-import chroma from 'chroma-js';
-export default {
-  root: {
-    width: '20%',
-    height: '25%',
-    margin: '0',
-    display: 'inline-block',
-    position: 'relative',
-    cursor: 'pointer',
-    verticalAlign: 'top',
-    boxSizing: 'border-box',
-    transition: 'filter 160ms ease',
-    '&:hover': { filter: 'brightness(1.06)' },
-    '&:hover svg': {
-      color: 'white',
-      transform: 'scale(1.3)'
-    },
-    [sizes.down('lg')]: {
-      width: '25%',
-      height: '20%'
-    },
-    [sizes.down('md')]: {
-      width: '50%',
-      height: '10%'
-    },
-    [sizes.down('sm')]: {
-      width: '50%',
-      height: '60px'
-    },
-    [sizes.down('xs')]: {
-      width: '100%',
-      height: '52px'
-    }
-  },
+import { readableText } from '../contrast';
+export default (_theme, props) => ({
+  root: { width: '100%', height: '100%', minHeight: 64, position: 'relative', boxSizing: 'border-box' },
   boxContent: {
-    position: 'absolute',
-    width: '100%',
-    left: '0',
-    bottom: '0px',
-    top: '0px',
-    padding: '0 12px',
-    color: props =>
-      chroma(props.color).luminance() <= 0.15 ? 'white' : 'rgba(0, 0, 0, 0.65)',
-    letterSpacing: '1px',
-    textTransform: 'uppercase',
-    fontSize: '12px',
-    fontWeight: 700,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    boxSizing: 'border-box',
-    '& span': {
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-      marginRight: '8px'
-    }
+    position: 'absolute', inset: 0, padding: '0 8px', color: readableText(props.color),
+    letterSpacing: '1px', textTransform: 'uppercase', fontSize: '12px', fontWeight: 700,
+    display: 'flex', alignItems: 'center', gap: 4, boxSizing: 'border-box',
+    '& span': { flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }
   },
-  deleteIcon: {
-    padding: '6px',
-    color: 'inherit',
-    transition: 'all 0.2s ease-in-out',
-    '& svg': {
-      fontSize: '20px'
-    }
-  }
-};
+  dragHandle: { width: 44, height: 44, padding: 10, color: 'inherit', flexShrink: 0, touchAction: 'none', cursor: 'grab', '&:active': { cursor: 'grabbing' } },
+  deleteIcon: { width: 44, height: 44, padding: 10, color: 'inherit', flexShrink: 0, '& svg': { fontSize: 20 } }
+});

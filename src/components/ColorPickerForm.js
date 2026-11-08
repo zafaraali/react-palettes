@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import { ChromePicker } from 'react-color';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from 'tss-react/mui';
 import styles from '../styles/ColorPickerFormStyles';
+import { readableText } from '../contrast';
 class ColorPickerForm extends Component {
   constructor(props) {
     super(props);
@@ -14,20 +15,25 @@ class ColorPickerForm extends Component {
   }
   componentDidMount() {
     // custom rule will have name 'isColorNameUnique'
-    ValidatorForm.addValidationRule('isColorNameUnique', value =>
+    ValidatorForm.addValidationRule('isColorNameUnique', (value) =>
       this.props.colors.every(
         ({ name }) => name.toLowerCase() !== value.toLowerCase()
       )
     );
-    ValidatorForm.addValidationRule('isColorUnique', value =>
+    ValidatorForm.addValidationRule('isColorUnique', (_value) =>
       this.props.colors.every(({ color }) => color !== this.state.currentColor)
     );
   }
 
-  updateCurrentColor = newColor => {
+  componentWillUnmount() {
+    ValidatorForm.removeValidationRule('isColorNameUnique');
+    ValidatorForm.removeValidationRule('isColorUnique');
+  }
+
+  updateCurrentColor = (newColor) => {
     this.setState({ currentColor: newColor.hex });
   };
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -54,10 +60,12 @@ class ColorPickerForm extends Component {
         />
         <ValidatorForm onSubmit={this.handleSubmit} instantValidate={false}>
           <TextValidator
+            id='color-name'
             variant='filled'
             margin='normal'
             className={classes.colorNameInput}
             placeholder='Color Name'
+            inputProps={{ 'aria-label': 'Color Name' }}
             value={newColorName}
             name='newColorName'
             onChange={this.handleChange}
@@ -73,7 +81,8 @@ class ColorPickerForm extends Component {
             variant='contained'
             color='primary'
             style={{
-              backgroundColor: paletteFull ? 'gainsboro' : currentColor
+              backgroundColor: paletteFull ? 'gainsboro' : currentColor,
+              color: paletteFull ? undefined : readableText(currentColor)
             }}
             type='submit'
             disabled={paletteFull}
@@ -85,4 +94,4 @@ class ColorPickerForm extends Component {
     );
   }
 }
-export default withStyles(styles)(ColorPickerForm);
+export default withStyles(ColorPickerForm, styles);
