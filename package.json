@@ -52,6 +52,7 @@
     "format": "prettier --write src *.mjs *.json *.md",
     "format:check": "prettier --check src *.mjs *.json *.md",
     "test:e2e": "playwright test",
+    "deploy": "npm run build && npx wrangler deploy",
     "check": "npm run lint && npm run format:check && npm test && npm run build",
     "preview": "vite preview"
   },
